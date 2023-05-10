@@ -18,7 +18,11 @@ const About = () => {
           <div className="lg:w-1/2 space-y-5 p-4">
             <h3 className="text-3xl text-orange-500 font-bold">About Us</h3>
             <h1 className="text-5xl font-bold">
-              We are qualified & of experience in this field
+              We are qualified &
+              <br />
+              of experience
+              <br />
+              <span className="text-pink-300">in this field</span>
             </h1>
             <p className="py-6">
               There are many variations of passages of Lorem Ipsum available,
