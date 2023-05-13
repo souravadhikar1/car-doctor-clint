@@ -9,7 +9,9 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     logOut()
-      .then(() => {})
+      .then(() => {
+        localStorage.removeItem("car-access-token");
+      })
       .catch((error) => console.log(error));
   };
 
@@ -27,12 +29,12 @@ const Navbar = () => {
             <Link to="/bookings">My Bookings</Link>
           </li>
           <li>
-            <button onClick={handleLogOut}>Log Out</button>
+            <button onClick={handleLogOut}>Log out</button>
           </li>
         </>
       ) : (
         <li>
-          <Link to="/login">Login</Link>
+          <Link to="/login">Login</Link>{" "}
         </li>
       )}
     </>

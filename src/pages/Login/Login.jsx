@@ -1,11 +1,16 @@
 import React, { useContext } from "react";
 
 import img from "../../assets/images/login/login.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || "/";
+
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -16,10 +21,30 @@ const Login = () => {
     signIn(email, password)
       .then((result) => {
         const user = result.user;
+        const loggedUser = {
+          email: user.email,
+        };
         console.log("current user", user);
+
+        fetch("http://localhost:5000/jwt", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(loggedUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("jwt response", data);
+
+            // warning to set local storage
+
+            localStorage.setItem("car-access-token", data.token);
+            navigate(from, { replace: true });
+          });
       })
       .catch((error) => {
-        console.log(er);
+        console.log(error);
       });
   };
   return (
